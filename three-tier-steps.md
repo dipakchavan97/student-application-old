@@ -159,14 +159,14 @@ yum install java -y
 ````
 
 ````
-curl -O https://dlcdn.apache.org/tomcat/tomcat-9/v9.0.107/bin/apache-tomcat-9.0.107.tar.gz
+curl -O https://dlcdn.apache.org/tomcat/tomcat-9/v9.0.112/bin/apache-tomcat-9.0.112.tar.gz
 ````
 ````
-tar -xzvf apache-tomcat-9.0.107.tar.gz -C /opt/
+tar -xzvf apache-tomcat-9.0.112.tar.gz -C /opt/
 ````
 **go to webapps dir and download .war file(application)**
 ````
-cd /opt/apache-tomcat-9.0.107.tar.gz/webapps
+cd /opt/apache-tomcat-9.0.112/webapps
 ````
 ````
 curl -O https://s3-us-west-2.amazonaws.com/studentapi-cit/student.war
@@ -180,7 +180,7 @@ curl -O https://s3-us-west-2.amazonaws.com/studentapi-cit/mysql-connector.jar
 ````
 ### $\color{magenta} \textbf{ MODIFY \ context.xml}$
 ````
-cd apache-tomcat-9.0.107/conf
+cd apache-tomcat-9.0.112/conf
 ````
 ````
 vim context.xml
@@ -190,7 +190,7 @@ add below line [connection string] at line 21
  <Resource name="jdbc/TestDB" auth="Container" type="javax.sql.DataSource"
                maxTotal="100" maxIdle="30" maxWaitMillis="10000"
                username="USERNAME" password="PASSWORD" driverClassName="com.mysql.jdbc.Driver"
-               url="jdbc:mysql://DB-ENDPOINT:3306/DATABASE-NAME"/>
+               url="jdbc:mysql://RDS-ENDPOINT:3306/DATABASE-NAME"/>
 
 ````
 ![image](https://github.com/user-attachments/assets/1dd0a494-6e94-4513-9164-688bd2860b48)
