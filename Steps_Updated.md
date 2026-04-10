@@ -51,17 +51,19 @@ Connect via SSH to your Nginx public IP. Create your key pair file to access the
 vim 3-tier-key.pem
 # Paste your private key, save (:wq), and restrict permissions:
 chmod 400 3-tier-key.pem
+```
 
 2. Install MySQL Client and Connect
 Install the client tools on the Ubuntu Bastion host:
 
-Bash
+```Bash
 sudo apt update
 sudo apt install mysql-client -y
 Connect to your RDS instance (replace <rds-endpoint> with your actual AWS RDS endpoint):
-
-Bash
+```
+```Bash
 mysql -h <rds-endpoint> -u admin -pPasswd123$
+```
 3. Create the Schema and Table
 Execute the following SQL commands:
 
