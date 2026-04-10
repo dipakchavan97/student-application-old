@@ -58,16 +58,16 @@ Install the client tools on the Ubuntu Bastion host:
 
 ```Bash
 sudo apt update
-sudo apt install mysql-client -y
+sudo apt install mysql-client -y```
 Connect to your RDS instance (replace <rds-endpoint> with your actual AWS RDS endpoint):
-```
+
 ```Bash
 mysql -h <rds-endpoint> -u admin -pPasswd123$
 ```
 3. Create the Schema and Table
 Execute the following SQL commands:
 
-SQL
+```Bash
 SHOW DATABASES;
 CREATE DATABASE studentapp;
 USE studentapp;
