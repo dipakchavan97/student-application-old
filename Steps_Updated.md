@@ -84,69 +84,69 @@ CREATE TABLE IF NOT EXISTS students(
 );
 
 SHOW TABLES;
-exit;
+exit;```
 ⚙️ Phase 4: Application Tier Setup (Tomcat)
 From the Nginx Bastion, SSH into your private Tomcat server:
 
-Bash
-ssh -i 3-tier-key.pem ubuntu@<private-ip-of-tomcat>
+```Bash
+ssh -i 3-tier-key.pem ubuntu@<private-ip-of-tomcat>```
 1. Install Java
 Switch to root and install the default Java Development Kit:
 
-Bash
+```Bash
 sudo -i
 apt update
-apt install default-jdk -y
+apt install default-jdk -y```
 2. Download and Extract Tomcat 9
 Use the permanent Apache archive link to avoid 404 errors:
 
-Bash
+```Bash
 curl -O [https://archive.apache.org/dist/tomcat/tomcat-9/v9.0.112/bin/apache-tomcat-9.0.112.tar.gz](https://archive.apache.org/dist/tomcat/tomcat-9/v9.0.112/bin/apache-tomcat-9.0.112.tar.gz)
-tar -xzvf apache-tomcat-9.0.112.tar.gz -C /opt/
+tar -xzvf apache-tomcat-9.0.112.tar.gz -C /opt/```
 3. Download Application Payload & DB Driver
-Bash
+```Bash
 cd /opt/apache-tomcat-9.0.112/webapps
 curl -O [https://s3-us-west-2.amazonaws.com/studentapi-cit/student.war](https://s3-us-west-2.amazonaws.com/studentapi-cit/student.war)
 
 cd ../lib
-curl -O [https://s3-us-west-2.amazonaws.com/studentapi-cit/mysql-connector.jar](https://s3-us-west-2.amazonaws.com/studentapi-cit/mysql-connector.jar)
+curl -O [https://s3-us-west-2.amazonaws.com/studentapi-cit/mysql-connector.jar](https://s3-us-west-2.amazonaws.com/studentapi-cit/mysql-connector.jar)```
 4. Configure Database Connection
 Edit the Tomcat context configuration:
 
-Bash
+```Bash
 cd /opt/apache-tomcat-9.0.112/conf
-vim context.xml
+vim context.xml```
 Insert the following JDBC connection string around line 21 (inside the <Context> block). Ensure you replace RDS-ENDPOINT with your actual endpoint.
 
-XML
+```XML
 <Resource name="jdbc/TestDB" auth="Container" type="javax.sql.DataSource"
           maxTotal="100" maxIdle="30" maxWaitMillis="10000"
           username="admin" password="Passwd123$" driverClassName="com.mysql.jdbc.Driver"
-          url="jdbc:mysql://RDS-ENDPOINT:3306/studentapp"/>
+          url="jdbc:mysql://RDS-ENDPOINT:3306/studentapp"/>```
 5. Start Tomcat
 Bash
-cd ../bin
+```cd ../bin
 chmod +x catalina.sh
 ./catalina.sh start
-exit
+exit```
 🌐 Phase 5: Web Tier Setup (Nginx Reverse Proxy)
 You should now be back on your Nginx server.
 
 1. Install Nginx
-Bash
+```Bash
 sudo -i
 apt update
-apt install nginx -y
+apt install nginx -y```
 2. Remove Default Ubuntu Page
 Ubuntu places a default site block that interferes with reverse proxies. Remove it:
 
-Bash
-rm /etc/nginx/sites-enabled/default
+```Bash
+rm /etc/nginx/sites-enabled/default```
 3. Configure the Reverse Proxy
 Open the main configuration file:
 
-Bash
-vim /etc/nginx/nginx.conf
+```Bash
+vim /etc/nginx/nginx.conf```
 Delete the existing content and paste the following configuration. Make sure to replace <private-ip-of-tomcat> with your Tomcat server's actual private IP:
 
 Nginx
